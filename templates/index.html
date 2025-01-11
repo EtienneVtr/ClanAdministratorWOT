@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Flask App</title>
+</head>
+<body>
+    <h1>Bienvenue sur mon application Flask</h1>
+    
+    {% if nickname %}
+        <p>Bonjour, {{ nickname }} !</p>
+        <a href="/logout">
+            <button>Se déconnecter</button>
+        </a>
+    {% else %}
+        <p>Vous n'êtes pas connecté.</p>
+        <a href="/login">
+            <button>Se connecter via Wargaming</button>
+        </a>
+    {% endif %}
+</body>
+</html>
