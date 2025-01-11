@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, request, session, url_for
 import os
 from dotenv import load_dotenv
 import requests
+import time
 
 # Charger les variables d'environnement depuis le fichier .env
 load_dotenv()
@@ -48,13 +49,13 @@ def callback():
     session['nickname'] = nickname
     
     # Récupération du nom du clan
-    url = f"https://api.worldoftanks.eu/wot/clans/memberhistory/?application_id={APPLICATION_ID}&account_id={account_id}&language=en"
+    url = f"https://api.worldoftanks.eu/wot/account/info/?application_id={APPLICATION_ID}&account_id={account_id}"
     response = requests.get(url)
     data = response.json()
-    if data["data"][account_id] == []:
+    clan_id = data["data"][account_id]["clan_id"]
+    if clan_id == None:
         clan_name = "Aucun clan"
     else:
-        clan_id = data["data"].get(str(account_id), [])[0].get("clan_id", None)
         url = f"https://api.worldoftanks.eu/wot/clans/info/?application_id={APPLICATION_ID}&clan_id={clan_id}"
         response = requests.get(url)
         data = response.json()
