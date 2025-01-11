@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, request, session, url_for
 import os
 from dotenv import load_dotenv
+import requests
 
 # Charger les variables d'environnement depuis le fichier .env
 load_dotenv()
@@ -18,7 +19,8 @@ REDIRECT_URI = "http://127.0.0.1:5000/callback"  # URL où l'utilisateur est red
 def index():
     # Vérifie si un utilisateur est connecté
     nickname = session.get('nickname')  # Récupération du pseudo depuis la session
-    return render_template('index.html', nickname=nickname)
+    clan_name = session.get('clan_name')  # Récupération du nom du clan depuis la session
+    return render_template('index.html', nickname=nickname, clan_name=clan_name)
 
 @app.route('/login')
 def login():
@@ -44,6 +46,20 @@ def callback():
     session['expires_at'] = expires_at
     session['account_id'] = account_id
     session['nickname'] = nickname
+    
+    # Récupération du nom du clan
+    url = f"https://api.worldoftanks.eu/wot/clans/memberhistory/?application_id={APPLICATION_ID}&account_id={account_id}&language=en"
+    response = requests.get(url)
+    data = response.json()
+    if data["data"][account_id] == []:
+        clan_name = "Aucun clan"
+    else:
+        clan_id = data["data"].get(str(account_id), [])[0].get("clan_id", None)
+        url = f"https://api.worldoftanks.eu/wot/clans/info/?application_id={APPLICATION_ID}&clan_id={clan_id}"
+        response = requests.get(url)
+        data = response.json()
+        clan_name = data["data"].get(str(clan_id), {}).get("tag", None)
+    session['clan_name'] = clan_name
 
     # Redirection vers la page principale
     return redirect(url_for('index'))
