@@ -3,22 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Flask App</title>
+    <title>Boosts de Clan</title>
+    <!-- Lien vers Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>C'est l'heure des booooooooooooooooooooooooooooooooooosts</h1>
-    
-    {% if nickname %}
-        <p>Bonjour, {{ nickname }} !</p>
-        <p>Clan : {{ clan_name }}</p>
-        <a href="/logout">
-            <button>Se déconnecter</button>
-        </a>
-    {% else %}
-        <p>Vous n'êtes pas connecté.</p>
-        <a href="/login">
-            <button>Se connecter via Wargaming</button>
-        </a>
-    {% endif %}
-</body>
+    <body>
+        <h1>C'est l'heure des booooooooooooooooooooooooooooooooooosts</h1>
+        
+        {% if nickname %}
+            <p>Bonjour, {{ nickname }} !</p>
+            <p>Clan : {{ clan_name }}</p>
+            <a href="/logout">
+                <button>Se déconnecter</button>
+            </a>
+        {% else %}
+            <p>Vous n'êtes pas connecté.</p>
+            <p>N'oubliez pas connecter à votre <a href="https://worldoftanks.eu/fr/">compte Wargaming</a> avant de vous connecter ici !</p>
+            <a href="/login">
+                <button>Se connecter via Wargaming</button>
+            </a>
+        {% endif %}
+    </body>
 </html>
+

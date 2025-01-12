@@ -1,8 +1,8 @@
 from flask import Flask, render_template, redirect, request, session, url_for
 import os
 from dotenv import load_dotenv
-import requests
-import time
+
+from src.utils import get_clan_name
 
 # Charger les variables d'environnement depuis le fichier .env
 load_dotenv()
@@ -15,6 +15,13 @@ app.secret_key = os.getenv('FLASK_SECRET_KEY')
 # L'ID de l'application fourni par Wargaming
 APPLICATION_ID = "c7571fd57ca5f64661bb378bf38bb08c"
 REDIRECT_URI = "http://127.0.0.1:5000/callback"  # URL où l'utilisateur est redirigé après connexion
+
+# Désactive les logs pour les requêtes vers l'API Wargaming
+@app.before_request
+def silence_logs():
+    if request.endpoint in ['callback']:
+        import logging
+        logging.getLogger('werkzeug').setLevel(logging.ERROR)
 
 @app.route('/')
 def index():
@@ -47,20 +54,7 @@ def callback():
     session['expires_at'] = expires_at
     session['account_id'] = account_id
     session['nickname'] = nickname
-    
-    # Récupération du nom du clan
-    url = f"https://api.worldoftanks.eu/wot/account/info/?application_id={APPLICATION_ID}&account_id={account_id}"
-    response = requests.get(url)
-    data = response.json()
-    clan_id = data["data"][account_id]["clan_id"]
-    if clan_id == None:
-        clan_name = "Aucun clan"
-    else:
-        url = f"https://api.worldoftanks.eu/wot/clans/info/?application_id={APPLICATION_ID}&clan_id={clan_id}"
-        response = requests.get(url)
-        data = response.json()
-        clan_name = data["data"].get(str(clan_id), {}).get("tag", None)
-    session['clan_name'] = clan_name
+    session['clan_name'] = get_clan_name(APPLICATION_ID, account_id)
 
     # Redirection vers la page principale
     return redirect(url_for('index'))
