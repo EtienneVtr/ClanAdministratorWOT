@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Réserves de Clan{% endblock %}
+
+{% block content %}
+    <h1>Réserves disponibles</h1>
+
+    {% if reserves %}
+        <ul class="list-group">
+            {% for reserve in reserves %}
+                {% if not reserve.disposable %}
+                    <li class="list-group-item">
+                        <h2>{{ reserve.name }}</h2>
+                        <p>Niveau disponible :</p>
+                        <ul>
+                            {% for stock in reserve.in_stock %}
+                                <li class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        Niveau {{ stock.level }} - Quantité : {{ stock.amount }}
+
+                                        {% if stock.active_till %}
+                                            <p>Active jusqu'au : {{ stock.active_till | datetimeformat }}</p>
+                                        {% endif %}
+
+                                        <ul>
+                                            {% for bonus in stock.bonus_values %}
+                                                <li>Bonus : +{{ bonus.value * 100 }}% {{ reserve.bonus_type }} pour {{ bonus.battle_type }} pendant {{ stock.action_time / (60*60) }}h.</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <form action="/reserves" method="post">
+                                        <input type="hidden" name="name" value="{{ reserve.name }}">
+                                        <input type="hidden" name="type" value="{{ reserve.type }}">
+                                        <input type="hidden" name="level" value="{{ stock.level }}">
+                                        {% if stock.activable == True %}
+                                            <button type="submit" class="btn btn-primary">Activer</button>
+                                        {% else %}
+                                            <button type="submit" class="btn btn-primary" disabled>Activer</button>
+                                        {% endif %}
+                                    </form>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucune réserve disponible pour le moment.</p>
+    {% endif %}
+{% endblock %}

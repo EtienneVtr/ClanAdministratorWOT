@@ -1,0 +1,82 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+header nav a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+}
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #c0bebe;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+main {
+    padding: 2rem;
+}
+
+/* Style du conteneur principal du header */
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Sépare les éléments gauche, centre et droit */
+    padding: 10px 20px;
+    background-color: #333; /* Couleur de fond */
+    color: white;
+}
+
+/* Section gauche : Logo */
+.header-left {
+    flex: 0 0 auto; /* Ne laisse pas cette section s'étirer */
+}
+
+.header-logo {
+    height: 60px; /* Taille de l'image (modifiable) */
+    width: auto;
+    object-fit: contain;
+}
+
+/* Section milieu : Connexion */
+.header-center {
+    flex: 1; /* Cette section occupe l'espace central */
+    text-align: center; /* Centrer le contenu horizontalement */
+}
+
+.header-center nav {
+    display: inline-block; /* Contenu compact */
+}
+
+.header-center p {
+    margin: 5px 0;
+}
+
+/* Section droite : Menu */
+.header-right {
+    flex: 0 0 auto; /* Ne laisse pas cette section s'étirer */
+    text-align: right;
+}
+
+.menu-icon {
+    font-size: 1.5rem; /* Taille du symbole de menu */
+    cursor: pointer; /* Change le curseur pour indiquer un clic */
+}
+
