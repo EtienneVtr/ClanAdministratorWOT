@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, request, session, url_for
 import os
 from dotenv import load_dotenv
+from datetime import datetime
 
 from src.utils import *
 
@@ -93,6 +94,7 @@ def reserves():
         for reserve in reserves: 
             for stock in reserve['in_stock']:
                 if stock['active_till'] is not None:
+                    stock['active_till'] = str(datetime.fromtimestamp(stock['active_till']).strftime('%d-%m-%Y') + " à " + datetime.fromtimestamp(stock['active_till']).strftime('%H:%M:%S'))
                     activated_reserves[reserve['name']] = True
         
         # Ajoute un attribut à reserve.stock pour savoir si on peut activer la réserve
@@ -109,9 +111,12 @@ def reserves():
         
         if is_activable(reserve_name, activated_reserves):
             activated_reserves[reserve_name] = True
+            token = session.get('access_token')
             # Activation de la réserve !! À FAIRE SEULEMENT AVEC XORION !!
-            # url = f"https://api.worldoftanks.eu/wot/stronghold/activateclanreserve/?application_id={APPLICATION_ID}&access_token={session.get('access_token')}&reserve_level={reserve_level}&reserve_type={reserve_type}"
-            # response = requests.post(url)
+            '''url = f"https://api.worldoftanks.eu/wot/stronghold/activateclanreserve/?application_id={APPLICATION_ID}&access_token={token}&reserve_type={reserve_type}&language=fr&reserve_level={reserve_level}&fields=activated_at"
+            print(url)
+            response = requests.post(url)
+            print(response.json())'''
             return redirect(url_for('reserves'))
         
         return redirect(url_for('reserves'))
