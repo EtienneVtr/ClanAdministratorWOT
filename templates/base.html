@@ -33,17 +33,29 @@
             
             <!-- Section droite : Menu -->
             <div class="header-right">
-                <div class="menu-icon">
+                <div class="menu-icon" id="menu-toggle">
                     &#9776; <!-- Symbole de menu (trois lignes) -->
                 </div>
             </div>
         </div>
-    </header>      
+    </header>
+    <!-- Menu déroulant -->
+    <div class="side-menu" id="side-menu">
+        <ul>
+            <li><a href="{{ url_for('index') }}">Accueil</a></li>
+            {% if player.can_use_reserve == True %}
+                <li><a href="{{ url_for('reserves') }}">Activer une réserve</a></li>
+            {% endif %}
+            <li><a href="{{ url_for('resultats') }}">Les derniers résultats du clan</a></li>
+        </ul>
+    </div>
     <main>
         {% block content %}{% endblock %}
     </main>
     <footer>
         <p>&copy; 2025 Clan Administrator</p>
     </footer>
+    <!-- Inclure le script JavaScript -->
+    <script src="{{ url_for('static', filename='js/menu.js') }}"></script>
 </body>
 </html>

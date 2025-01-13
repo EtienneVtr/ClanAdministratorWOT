@@ -116,6 +116,10 @@ def reserves():
         
         return redirect(url_for('reserves'))
 
+@app.route('/resultats')
+def resultats():
+    return render_template('resultats.html')
+
 @app.route('/logout')
 def logout():
     # Supprime toutes les données de session

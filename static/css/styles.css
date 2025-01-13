@@ -38,31 +38,31 @@ main {
 .header-container {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Sépare les éléments gauche, centre et droit */
+    justify-content: space-between;
     padding: 10px 20px;
-    background-color: #333; /* Couleur de fond */
+    background-color: #333;
     color: white;
 }
 
 /* Section gauche : Logo */
 .header-left {
-    flex: 0 0 auto; /* Ne laisse pas cette section s'étirer */
+    flex: 0 0 auto;
 }
 
 .header-logo {
-    height: 60px; /* Taille de l'image (modifiable) */
+    height: 60px;
     width: auto;
     object-fit: contain;
 }
 
 /* Section milieu : Connexion */
 .header-center {
-    flex: 1; /* Cette section occupe l'espace central */
-    text-align: center; /* Centrer le contenu horizontalement */
+    flex: 1;
+    text-align: center;
 }
 
 .header-center nav {
-    display: inline-block; /* Contenu compact */
+    display: inline-block;
 }
 
 .header-center p {
@@ -71,12 +71,59 @@ main {
 
 /* Section droite : Menu */
 .header-right {
-    flex: 0 0 auto; /* Ne laisse pas cette section s'étirer */
+    flex: 0 0 auto;
     text-align: right;
 }
 
 .menu-icon {
-    font-size: 1.5rem; /* Taille du symbole de menu */
-    cursor: pointer; /* Change le curseur pour indiquer un clic */
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.3s;
 }
 
+/* Menu déroulant */
+.side-menu {
+    position: fixed;
+    top: 100px;
+    right: -250px; /* Commence hors de l'écran */
+    width: 250px;
+    background-color: #444;
+    color: white;
+    height: auto;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    transition: right 0.3s ease; /* Animation fluide */
+    z-index: 1000;
+}
+
+.side-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.side-menu li {
+    border-bottom: 1px solid #555;
+}
+
+.side-menu li a {
+    display: block;
+    padding: 15px;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.side-menu li a:hover {
+    background-color: #666;
+}
+
+/* Menu actif */
+.side-menu.active {
+    right: 0; /* Glisse sur l'écran */
+}
+
+/* Transformation du menu icon en croix */
+.menu-icon.active {
+    transform: rotate(90deg); /* Ajoute un effet de rotation */
+}
