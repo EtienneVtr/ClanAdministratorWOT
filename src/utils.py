@@ -87,3 +87,19 @@ def download_image(image_url, save_path):
             file.write(response.content)
         return True
     return False
+
+def get_online_members(application_id, clan_id, access_token):
+    url = f"https://api.worldoftanks.eu/wot/clans/info/?application_id={application_id}&clan_id={clan_id}&access_token={access_token}&extra=private.online_members&language=fr&members_key=id"
+    response = requests.get(url)
+    data = response.json()
+    return data["data"][str(clan_id)]["private"]["online_members"]
+
+# Donne la liste des pseudoes des joueurs correspondants aux IDs donnés
+def get_players_by_ids(application_id, players_ids):
+    ids_str = ""
+    for player_id in players_ids:
+        ids_str += str(player_id) + "%2C,"
+    url = f"https://api.worldoftanks.eu/wot/account/info/?application_id={application_id}&fields=nickname%2C+client_language%2C+global_rating%2C+last_battle_time&language=fr&account_id={ids_str}"
+    response = requests.get(url)
+    data = response.json()
+    return data["data"]

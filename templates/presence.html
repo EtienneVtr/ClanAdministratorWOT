@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Présence des joueurs{% endblock %}
+
+{% block content %}
+    <h1>Présence chez {{ player.clan_name }} !</h1>
+
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Pseudo</th>
+                <th>Classement Global</th>
+                <th>Dernière Bataille</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for id, info in wot_online_members.items() %}
+                <tr>
+                    <td>
+                        <a href="https://tomato.gg/stats/{{ info.nickname }}-{{ id }}/EU" target="_blank">
+                            {{ info.nickname }}
+                        </a>
+                    </td>
+                    <td>{{ info.global_rating }}</td>
+                    <td>{{ info.last_battle_time | dateformat }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -4,8 +4,12 @@
 
 {% block content %}
     <h1>Bienvenue sur votre <strong>Clan Administrator</strong></h1>
-    {% if player.can_use_reserve == True%}
-        <a href="{{ url_for('reserves') }}">Activer des Réserves de Clan</a>
+    {% if player.can_use_reserve == True %}
+        <div class="button-container">
+            <a href="{{ url_for('reserves') }}" class="btn-custom">Activer des Réserves de Clan</a>
+            <a href="{{ url_for('presence') }}" class="btn-custom">Voir la présence des membres</a>
+        </div>
     {% endif %}
 {% endblock %}
+
 

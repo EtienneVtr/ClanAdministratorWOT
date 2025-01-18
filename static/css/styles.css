@@ -73,12 +73,26 @@ main {
 .header-right {
     flex: 0 0 auto;
     text-align: right;
+    display: flex; /* Utilise un conteneur flexible */
+    align-items: center; /* Aligne les éléments verticalement */
+    gap: 10px; /* Ajoute un espace entre la maison et le menu */
 }
 
 .menu-icon {
     font-size: 1.5rem;
     cursor: pointer;
     transition: transform 0.3s;
+}
+
+.home-icon {
+    font-size: 1.5rem; /* Ajuste la taille de l'icône */
+    text-decoration: none; /* Supprime le soulignement */
+    color: inherit; /* Utilise la couleur actuelle du texte */
+    display: inline-block; /* Assure un bon alignement */
+}
+
+.home-icon:hover {
+    color: #c3d8ef; /* Change la couleur au survol */
 }
 
 /* Menu déroulant */
@@ -126,4 +140,30 @@ main {
 /* Transformation du menu icon en croix */
 .menu-icon.active {
     transform: rotate(90deg); /* Ajoute un effet de rotation */
+}
+
+/* Conteneur pour les boutons */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* Espacement entre les boutons */
+    margin-top: 20px;
+}
+
+/* Style des boutons personnalisés */
+.btn-custom {
+    background-color: #007bff; /* Couleur principale */
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-custom:hover {
+    background-color: #0056b3; /* Couleur au survol */
+    transform: scale(1.05); /* Légère mise en relief */
 }
